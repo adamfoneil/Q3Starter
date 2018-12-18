@@ -28,21 +28,68 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(132, 12);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(552, 21);
+			this.textBox1.TabIndex = 0;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(55, 15);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(71, 13);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Game Exe:";
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(132, 39);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(552, 21);
+			this.textBox2.TabIndex = 2;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(41, 42);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(85, 13);
+			this.label2.TabIndex = 3;
+			this.label2.Text = "BaseQ3 Path:";
 			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(696, 450);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.textBox2);
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.textBox1);
 			this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.Name = "frmMain";
-			this.Text = "Form1";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "Q3Starter";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
+
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.Label label2;
 	}
 }
 
