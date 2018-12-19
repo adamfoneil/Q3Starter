@@ -10,7 +10,7 @@ namespace Q3Starter.Controllers
 {
 	public static class ConfigBuilder
 	{
-		public static IEnumerable<MapInfo> GetMaps(string path)
+		public static List<MapInfo> GetMaps(string path)
 		{
 			List<MapInfo> results = new List<MapInfo>();
 

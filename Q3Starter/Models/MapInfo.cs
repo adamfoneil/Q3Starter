@@ -18,5 +18,10 @@ namespace Q3Starter.Models
 		/// Recommended bot count (based on local preferences)
 		/// </summary>
 		public int BotCount { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
