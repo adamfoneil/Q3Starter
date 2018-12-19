@@ -99,19 +99,34 @@ namespace Q3Starter.Controllers
 			}
 		}
 
-		public static void CreateScript(string fileName)
-		{
-
-		}
-
 		public static IEnumerable<string> GetMapRotationScript(IEnumerable<string> maps)
 		{
+			List<string> result = new List<string>();
 			int count = maps.Count();
 			const string mapVar = "map";
-			return maps.Select((s, i) =>
+			result.AddRange(maps.Select((s, i) =>
 			{
-				return $"set {mapVar}{1} \"map {s}; set nextmap vstr {mapVar}{((i < count) ? i + 1 : 0)}\"";
-			});
+				return $"set {mapVar}{i} \"map {s}; set nextmap vstr {mapVar}{((i < count) ? i + 1 : 0)}\";";
+			}));
+			result.Add($"vstr {mapVar}0;");
+			return result;
+		}
+
+		public static string GetScript(GameProfile profile, string path)
+		{
+			StringBuilder output = new StringBuilder();
+			output.AppendLine($"set g_game_type {Convert.ToInt32(profile.Type)};");
+			output.AppendLine($"set fraglimit {profile.FragLimit};");
+
+			var mapRotation = GetMapRotationScript(profile.Maps);
+			foreach (var map in mapRotation) output.AppendLine(map);
+
+			string cfgFile = $"q3starter-{profile.Name}.cfg";
+			using (var writer = File.CreateText(Path.Combine(path, cfgFile)))
+			{
+				writer.Write(output.ToString());
+			}
+			return cfgFile;
 		}
 	}
 }

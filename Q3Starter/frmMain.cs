@@ -5,6 +5,7 @@ using Q3Starter.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -112,7 +113,20 @@ namespace Q3Starter
 
 			// re-enable event handling
 			lbMaps.ItemCheck += lbMaps_ItemCheck;
+		}
 
+		private void btnPlay_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				ProcessStartInfo psi = new ProcessStartInfo(_settings.GameExe);
+				psi.Arguments = $"exec {ConfigBuilder.GetScript(_settings[_settings.CurrentProfile], _settings.BasePath)}";
+				Process.Start(psi);
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show(exc.Message);
+			}
 		}
 	}
 }

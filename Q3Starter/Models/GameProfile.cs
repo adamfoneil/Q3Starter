@@ -4,9 +4,9 @@ namespace Q3Starter.Models
 {
 	public enum GameType
 	{
-		FreeForAll,
-		TeamDeathmatch,
-		CaptureTheFlag
+		FreeForAll = 0,
+		TeamDeathmatch = 1,
+		CaptureTheFlag = 2
 	}
 
 	public enum Difficulty
