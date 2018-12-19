@@ -5,19 +5,15 @@ using Q3Starter.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Q3Starter
 {
 	public partial class frmMain : Form
 	{
-		private QuakeSettings _settings = null;
+		private Settings _settings = null;		
 
 		public frmMain()
 		{
@@ -26,15 +22,28 @@ namespace Q3Starter
 
 		private void frmMain_Load(object sender, EventArgs e)
 		{
-			_settings = JsonSettingsBase.Load<QuakeSettings>();
+			_settings = JsonSettingsBase.Load<Settings>();
 
 			tbGameExe.Text = _settings.GameExe;
 			tbBasePath.Text = _settings.BasePath;
+			nudFragLimit.Value = _settings[_settings.CurrentProfile].FragLimit;
+			cbProfile.Text = _settings.CurrentProfile;
 
 			FillMapList();
+			FillProfileList();
+			FillSelectedMaps();
 
-			tbGameExe.Bind((t) => _settings.GameExe = t);
-			tbBasePath.Bind((t) => _settings.BasePath = t);
+			tbGameExe.Bind((val) => _settings.GameExe = val);
+			tbBasePath.Bind((val) => _settings.BasePath = val);
+			cbProfile.Bind<string>((val) => _settings.CurrentProfile = val);
+			nudFragLimit.Bind((val) => _settings[_settings.CurrentProfile].FragLimit = Convert.ToInt32(val));
+		}
+
+		private void FillProfileList()
+		{
+			cbProfile.Items.Clear();
+			if (!_settings?.Profiles.Any() ?? true) return;
+			foreach (var profile in _settings.Profiles) cbProfile.Items.Add(profile.Name);
 		}
 
 		private void FillMapList()
@@ -46,7 +55,6 @@ namespace Q3Starter
 			lbMaps.DataSource = new BindingList<MapInfo>(maps);
 			lbMaps.ValueMember = "Name";
 			lbMaps.DisplayMember = "Name";
-			
 		}
 
 		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -58,6 +66,53 @@ namespace Q3Starter
 		{
 			var mapInfo = lbMaps.SelectedItem as MapInfo;
 			if (mapInfo != null) pictureBox1.Image = mapInfo.Thumbnail;
+		}
+
+		private void lbMaps_ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			var maps = _settings[_settings.CurrentProfile].Maps;
+
+			bool added = false;
+			if (maps == null)
+			{
+				maps = new HashSet<string>();
+				added = true;
+			}
+
+			var selected = (lbMaps.Items[e.Index] as MapInfo).Name;
+			if (e.NewValue == CheckState.Checked)
+			{
+				maps.Add(selected);
+			}
+			else
+			{
+				maps.Remove(selected);
+			}
+
+			if (added) _settings[_settings.CurrentProfile].Maps = maps;
+		}
+
+		private void cbProfile_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			_settings.CurrentProfile = cbProfile.SelectedItem.ToString();
+			FillSelectedMaps();
+		}
+
+		private void FillSelectedMaps()
+		{
+			// prevent updates to settings file
+			lbMaps.ItemCheck -= lbMaps_ItemCheck;
+
+			lbMaps.SelectedIndices.Clear();
+			foreach (var mapName in _settings[_settings.CurrentProfile].Maps)
+			{
+				var index = lbMaps.FindString(mapName);
+				lbMaps.SetItemChecked(index, true);
+			}
+
+			// re-enable event handling
+			lbMaps.ItemCheck += lbMaps_ItemCheck;
+
 		}
 	}
 }

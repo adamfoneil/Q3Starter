@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text;
 
 namespace Q3Starter.Controllers
 {
@@ -101,6 +102,16 @@ namespace Q3Starter.Controllers
 		public static void CreateScript(string fileName)
 		{
 
+		}
+
+		public static IEnumerable<string> GetMapRotationScript(IEnumerable<string> maps)
+		{
+			int count = maps.Count();
+			const string mapVar = "map";
+			return maps.Select((s, i) =>
+			{
+				return $"set {mapVar}{1} \"map {s}; set nextmap vstr {mapVar}{((i < count) ? i + 1 : 0)}\"";
+			});
 		}
 	}
 }
