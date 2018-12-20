@@ -23,21 +23,28 @@ namespace Q3Starter
 
 		private void frmMain_Load(object sender, EventArgs e)
 		{
-			_settings = JsonSettingsBase.Load<Settings>();
+			try
+			{
+				_settings = JsonSettingsBase.Load<Settings>();
 
-			tbGameExe.Text = _settings.GameExe;
-			tbBasePath.Text = _settings.BasePath;
-			nudFragLimit.Value = _settings[_settings.CurrentProfile].FragLimit;
-			cbProfile.Text = _settings.CurrentProfile;
+				tbGameExe.Text = _settings.GameExe;
+				tbBasePath.Text = _settings.BasePath;
+				nudFragLimit.Value = _settings[_settings.CurrentProfile].FragLimit;
+				cbProfile.Text = _settings.CurrentProfile;
 
-			FillMapList();
-			FillProfileList();
-			FillSelectedMaps();
+				FillMapList();
+				FillProfileList();
+				FillSelectedMaps();
 
-			tbGameExe.Bind((val) => _settings.GameExe = val);
-			tbBasePath.Bind((val) => _settings.BasePath = val);
-			cbProfile.Bind<string>((val) => _settings.CurrentProfile = val);
-			nudFragLimit.Bind((val) => _settings[_settings.CurrentProfile].FragLimit = Convert.ToInt32(val));
+				tbGameExe.Bind((val) => _settings.GameExe = val);
+				tbBasePath.Bind((val) => _settings.BasePath = val);
+				cbProfile.Bind<string>((val) => _settings.CurrentProfile = val);
+				nudFragLimit.Bind((val) => _settings[_settings.CurrentProfile].FragLimit = Convert.ToInt32(val));
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show(exc.Message);
+			}
 		}
 
 		private void FillProfileList()
@@ -105,10 +112,13 @@ namespace Q3Starter
 			lbMaps.ItemCheck -= lbMaps_ItemCheck;
 
 			lbMaps.SelectedIndices.Clear();
-			foreach (var mapName in _settings[_settings.CurrentProfile].Maps)
+			if (_settings[_settings.CurrentProfile].Maps != null)
 			{
-				var index = lbMaps.FindString(mapName);
-				lbMaps.SetItemChecked(index, true);
+				foreach (var mapName in _settings[_settings.CurrentProfile].Maps)
+				{
+					var index = lbMaps.FindString(mapName);
+					lbMaps.SetItemChecked(index, true);
+				}
 			}
 
 			// re-enable event handling
@@ -120,7 +130,7 @@ namespace Q3Starter
 			try
 			{
 				ProcessStartInfo psi = new ProcessStartInfo(_settings.GameExe);
-				psi.Arguments = $"exec {ConfigBuilder.GetScript(_settings[_settings.CurrentProfile], _settings.BasePath)}";
+				psi.Arguments = $"+exec {ConfigBuilder.GetScript(_settings[_settings.CurrentProfile], _settings.BasePath)}";
 				Process.Start(psi);
 			}
 			catch (Exception exc)
