@@ -4,6 +4,6 @@ I had used something in the past called Q3Launcher, I think, but I was having a 
 
 Only the bare-bones functionality works at this point. I can view the map list and select them for rotation, but there's no bot control, and way to select the game type. The profile dropdown (currently says "default") doesn't do what it's intended.
 
-This was an opportunity to practice structuring a WinForms app cleanly, to experiment with an [easier form data binding](https://github.com/adamosoftware/Q3Starter/blob/master/Q3Starter/Util/BindingExtensions.cs), to leverage my [JsonSettings](https://github.com/adamosoftware/JsonSettings) project.
+This was an opportunity to practice structuring a WinForms app cleanly, to experiment with an [easier form data binding](https://github.com/adamosoftware/Q3Starter/blob/master/Q3Starter/Util/BindingExtensions.cs) (used [here](https://github.com/adamosoftware/Q3Starter/blob/master/Q3Starter/frmMain.cs#L39)), to leverage my [JsonSettings](https://github.com/adamosoftware/JsonSettings) project.
 
 ![img](https://adamosoftware.blob.core.windows.net:443/images/Q3starter.PNG)
