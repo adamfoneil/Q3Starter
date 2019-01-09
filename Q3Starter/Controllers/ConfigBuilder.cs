@@ -106,7 +106,7 @@ namespace Q3Starter.Controllers
 			const string mapVar = "map";
 			result.AddRange(maps.Select((s, i) =>
 			{
-				return $"set {mapVar}{i} \"map {s}; set nextmap vstr {mapVar}{((i < count) ? i + 1 : 0)}\";";
+				return $"set {mapVar}{i} \"map {s}; set nextmap vstr {mapVar}{((i < (count - 1)) ? i + 1 : 0)}\";";
 			}));
 			result.Add($"vstr {mapVar}0;");
 			return result;
