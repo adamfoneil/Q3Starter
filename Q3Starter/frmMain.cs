@@ -40,6 +40,13 @@ namespace Q3Starter
 				tbBasePath.Bind((val) => _settings.BasePath = val);
 				cbProfile.Bind<string>((val) => _settings.CurrentProfile = val);
 				nudFragLimit.Bind((val) => _settings[_settings.CurrentProfile].FragLimit = Convert.ToInt32(val));
+
+				if (!string.IsNullOrEmpty(_settings.CurrentProfile))
+                {
+					var profile = _settings[_settings.CurrentProfile];
+					tbConfig.Text = ConfigBuilder.GetScriptContent(profile);
+					lblSelected.Text = $"{profile?.Maps.Count ?? 0} maps selected";
+				}				
 			}
 			catch (Exception exc)
 			{
@@ -67,7 +74,7 @@ namespace Q3Starter
 
 		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			_settings.Save();
+            _settings.Save();
 		}
 
 		private void lbMaps_SelectedIndexChanged(object sender, EventArgs e)
@@ -79,12 +86,10 @@ namespace Q3Starter
 		private void lbMaps_ItemCheck(object sender, ItemCheckEventArgs e)
 		{
 			var maps = _settings[_settings.CurrentProfile].Maps;
-
-			bool added = false;
+			
 			if (maps == null)
 			{
-				maps = new HashSet<string>();
-				added = true;
+				maps = new HashSet<string>();				
 			}
 
 			var selected = (lbMaps.Items[e.Index] as MapInfo).Name;
@@ -97,7 +102,9 @@ namespace Q3Starter
 				maps.Remove(selected);
 			}
 
-			if (added) _settings[_settings.CurrentProfile].Maps = maps;
+			_settings[_settings.CurrentProfile].Maps = maps;
+			tbConfig.Text = ConfigBuilder.GetScriptContent(_settings[_settings.CurrentProfile]);
+			lblSelected.Text = $"{maps.Count} maps selected";
 		}
 
 		private void cbProfile_SelectedIndexChanged(object sender, EventArgs e)
@@ -130,7 +137,7 @@ namespace Q3Starter
 			try
 			{
 				ProcessStartInfo psi = new ProcessStartInfo(_settings.GameExe);
-				psi.Arguments = $"+exec {ConfigBuilder.GetScript(_settings[_settings.CurrentProfile], _settings.BasePath)}";
+				psi.Arguments = $"+exec {ConfigBuilder.GetScriptFile(_settings[_settings.CurrentProfile], _settings.BasePath)}";
 				Process.Start(psi);
 			}
 			catch (Exception exc)
@@ -138,5 +145,5 @@ namespace Q3Starter
 				MessageBox.Show(exc.Message);
 			}
 		}
-	}
+    }
 }

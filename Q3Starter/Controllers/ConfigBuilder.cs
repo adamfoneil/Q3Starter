@@ -112,14 +112,20 @@ namespace Q3Starter.Controllers
 			return result;
 		}
 
-		public static string GetScript(GameProfile profile, string path)
-		{
+		public static string GetScriptContent(GameProfile profile)
+        {
 			StringBuilder output = new StringBuilder();
 			output.AppendLine($"set g_game_type {Convert.ToInt32(profile.Type)};");
 			output.AppendLine($"set fraglimit {profile.FragLimit};");
 
 			var mapRotation = GetMapRotationScript(profile.Maps);
 			foreach (var map in mapRotation) output.AppendLine(map);
+			return output.ToString();
+		}
+
+		public static string GetScriptFile(GameProfile profile, string path)
+		{
+			var output = GetScriptContent(profile);
 
 			string cfgFile = $"q3starter-{profile.Name}.cfg";
 			using (var writer = File.CreateText(Path.Combine(path, cfgFile)))
