@@ -199,6 +199,7 @@
             // 
             // lblSelected
             // 
+            this.lblSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblSelected.AutoSize = true;
             this.lblSelected.Location = new System.Drawing.Point(6, 279);
             this.lblSelected.Name = "lblSelected";
