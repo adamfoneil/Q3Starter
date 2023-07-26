@@ -119,7 +119,7 @@ namespace Q3Starter.Controllers
             output.AppendLine($"set g_game_type {Convert.ToInt32(profile.Type)};");
             output.AppendLine($"set fraglimit {profile.FragLimit};");
 
-            var mapRotation = GetMapRotationScript(profile.Maps);
+            var mapRotation = GetMapRotationScript(profile.Maps ?? Enumerable.Empty<string>());
             foreach (var map in mapRotation) output.AppendLine(map);
             return output.ToString();
         }

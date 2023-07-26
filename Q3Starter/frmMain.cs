@@ -45,7 +45,7 @@ namespace Q3Starter
                 {
                     var profile = _settings[_settings.CurrentProfile];
                     tbConfig.Text = ConfigBuilder.GetScriptContent(profile);
-                    lblSelected.Text = $"{profile?.Maps.Count ?? 0} maps selected";
+                    lblSelected.Text = $"{profile?.Maps?.Count ?? 0} maps selected";
                 }
             }
             catch (Exception exc)
@@ -124,6 +124,7 @@ namespace Q3Starter
                 foreach (var mapName in _settings[_settings.CurrentProfile].Maps)
                 {
                     var index = lbMaps.FindString(mapName);
+                    if (index < 0) continue;
                     lbMaps.SetItemChecked(index, true);
                 }
             }
