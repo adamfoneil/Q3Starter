@@ -169,20 +169,18 @@ public partial class MainWindow : Window
     {
         if (image == null) return null;
 
-        using (var memory = new MemoryStream())
-        {
-            image.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
-            memory.Position = 0;
-            
-            var bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.StreamSource = memory;
-            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapImage.EndInit();
-            bitmapImage.Freeze();
-            
-            return bitmapImage;
-        }
+        var memory = new MemoryStream();
+        image.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+        memory.Position = 0;
+        
+        var bitmapImage = new BitmapImage();
+        bitmapImage.BeginInit();
+        bitmapImage.StreamSource = memory;
+        bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+        bitmapImage.EndInit();
+        bitmapImage.Freeze();
+        
+        return bitmapImage;
     }
 }
 
