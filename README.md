@@ -9,3 +9,14 @@ This was an opportunity to practice structuring a WinForms app cleanly, to exper
 ![img](https://adamosoftware.blob.core.windows.net:443/images/Q3starter.PNG)
 
 The map rotation script is generated [here](https://github.com/adamosoftware/Q3Starter/blob/master/Q3Starter/Controllers/ConfigBuilder.cs#L102), which had help from [this thread](https://www.quake3world.com/forum/viewtopic.php?f=7&t=53280).
+
+## Projects
+
+This solution now contains multiple versions of the application:
+
+- **Q3Starter** - The original WinForms application targeting .NET Framework 4.7.2
+- **Q3Starter.Wpf** - A modern WPF version targeting .NET 8.0 with the same functionality as the WinForms app
+- **Q3Starter.Console** - A console version of the application
+- **Tests** - Unit tests for the application
+
+The WPF version provides a modern UI experience while maintaining all the functionality of the original WinForms application. Both desktop versions share the same Models and Controllers code, ensuring consistent behavior across platforms.
