@@ -40,8 +40,8 @@ public partial class MainWindow : Window
             FillSelectedMaps();
 
             // Wire up change events
-            tbGameExe.TextChanged += (s, ev) => { if (_settings != null) _settings.GameExe = tbGameExe.Text; };
-            tbBasePath.TextChanged += (s, ev) => { if (_settings != null) _settings.BasePath = tbBasePath.Text; };
+            tbGameExe.TextChanged += (s, ev) => { _settings?.GameExe = tbGameExe.Text; };
+            tbBasePath.TextChanged += (s, ev) => { _settings?.BasePath = tbBasePath.Text; };
             cbProfile.SelectionChanged += (s, ev) => { if (_settings != null && cbProfile.SelectedItem != null) _settings.CurrentProfile = cbProfile.SelectedItem.ToString() ?? "default"; };
             nudFragLimit.TextChanged += (s, ev) => { if (_settings != null && int.TryParse(nudFragLimit.Text, out int val)) _settings[_settings.CurrentProfile].FragLimit = val; };
 
@@ -100,12 +100,6 @@ public partial class MainWindow : Window
     {
         if (_settings == null) return;
 
-        var maps = _settings[_settings.CurrentProfile].Maps;
-        if (maps == null)
-        {
-            maps = new HashSet<string>();
-        }
-
         // Collect all checked maps
         var checkedMaps = new HashSet<string>();
         foreach (var item in _mapList)
@@ -155,7 +149,8 @@ public partial class MainWindow : Window
                 return;
             }
 
-            ProcessStartInfo psi = new ProcessStartInfo(_settings.GameExe);
+            ProcessStartInfo psi = new(_settings.GameExe);
+            psi.WorkingDirectory = Path.GetDirectoryName(_settings.GameExe);
             psi.Arguments = $"+exec {ConfigBuilder.GetScriptFile(_settings[_settings.CurrentProfile], _settings.BasePath)}";
             Process.Start(psi);
         }
@@ -165,7 +160,7 @@ public partial class MainWindow : Window
         }
     }
 
-    private BitmapImage? ConvertToImageSource(System.Drawing.Image? image)
+    private static BitmapImage? ConvertToImageSource(System.Drawing.Image? image)
     {
         if (image == null) return null;
 
@@ -184,15 +179,10 @@ public partial class MainWindow : Window
     }
 }
 
-public class MapInfoViewModel : INotifyPropertyChanged
+public class MapInfoViewModel(MapInfo mapInfo) : INotifyPropertyChanged
 {
-    public MapInfo MapInfo { get; }
+    public MapInfo MapInfo { get; } = mapInfo;
     private bool _isSelected;
-
-    public MapInfoViewModel(MapInfo mapInfo)
-    {
-        MapInfo = mapInfo;
-    }
 
     public string Name => MapInfo.Name;
 

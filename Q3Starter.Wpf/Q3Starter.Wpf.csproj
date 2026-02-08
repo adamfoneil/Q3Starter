@@ -12,7 +12,6 @@
   <ItemGroup>
     <PackageReference Include="JsonSettings.Library" Version="1.0.20" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Drawing.Common" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>

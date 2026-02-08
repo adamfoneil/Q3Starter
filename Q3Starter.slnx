@@ -1,0 +1,11 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Q3Starter.Console/Q3Starter.Console.csproj" />
+  <Project Path="Q3Starter.Wpf/Q3Starter.Wpf.csproj" />
+  <Project Path="Q3Starter/Q3Starter.csproj" />
+  <Project Path="Tests/Tests.csproj" />
+</Solution>
