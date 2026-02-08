@@ -4,8 +4,8 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Q3Starter.Console/Q3Starter.Console.csproj" />
+  <Project Path="Q3Starter.Console/Q3Starter.Console.csproj" Id="d6ca76bb-cd4c-44b6-905a-2360811db590" />
   <Project Path="Q3Starter.Wpf/Q3Starter.Wpf.csproj" />
-  <Project Path="Q3Starter/Q3Starter.csproj" />
-  <Project Path="Tests/Tests.csproj" />
+  <Project Path="Q3Starter/Q3Starter.csproj" Id="e29a0abb-cf4d-4385-8654-ef4603cb4472" />
+  <Project Path="Tests/Tests.csproj" Id="40b31b1f-971d-4e76-a6e1-17ecf3a4a73e" />
 </Solution>
