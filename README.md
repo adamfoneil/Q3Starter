@@ -20,3 +20,8 @@ This solution now contains multiple versions of the application:
 - **Tests** - Unit tests for the application
 
 The WPF version provides a modern UI experience while maintaining all the functionality of the original WinForms application. Both desktop versions share the same Models and Controllers code, ensuring consistent behavior across platforms.
+
+# Working Settings
+When getting this app going on a new machine, I have a terrible time getting the startup settings right. Here is example of working config:
+
+<img alt="image" src="https://github.com/user-attachments/assets/5e18deb0-b6af-4102-acf4-c05235930e8c" />
