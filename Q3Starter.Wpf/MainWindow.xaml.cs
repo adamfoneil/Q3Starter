@@ -98,7 +98,10 @@ public partial class MainWindow : Window
 
     private void lbMaps_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
-        if (e.Key == System.Windows.Input.Key.Space && lbMaps.SelectedItem is MapInfoViewModel mapViewModel)
+        // Only handle spacebar when ListBox has keyboard focus
+        if (e.Key == System.Windows.Input.Key.Space && 
+            lbMaps.IsKeyboardFocusWithin && 
+            lbMaps.SelectedItem is MapInfoViewModel mapViewModel)
         {
             // Toggle the checkbox
             mapViewModel.IsSelected = !mapViewModel.IsSelected;
@@ -111,7 +114,8 @@ public partial class MainWindow : Window
         // When checkbox is clicked, update the ListBox selection to match
         if (sender is CheckBox checkBox && checkBox.DataContext is MapInfoViewModel mapViewModel)
         {
-            var index = _mapList.IndexOf(mapViewModel);
+            // Use Items.IndexOf for better performance than searching _mapList
+            var index = lbMaps.Items.IndexOf(mapViewModel);
             if (index >= 0)
             {
                 lbMaps.SelectedIndex = index;
