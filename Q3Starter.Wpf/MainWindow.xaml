@@ -77,13 +77,15 @@
                     <!-- Maps CheckedListBox -->
                     <ListBox Grid.Column="0" Grid.Row="0" x:Name="lbMaps" 
                              SelectionChanged="lbMaps_SelectionChanged"
+                             PreviewKeyDown="lbMaps_PreviewKeyDown"
                              Margin="5">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding Name}" 
                                          IsChecked="{Binding IsSelected, Mode=TwoWay}"
                                          Checked="MapCheckBox_Changed"
-                                         Unchecked="MapCheckBox_Changed"/>
+                                         Unchecked="MapCheckBox_Changed"
+                                         PreviewMouseDown="MapCheckBox_PreviewMouseDown"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
